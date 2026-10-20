@@ -1,0 +1,83 @@
+schema_version: 1
+workspace: rag_a3_golden_dataset
+corpus:
+  version: "a3-golden-v1-756cab840ac23189"
+  version_file: CORPUS_VERSION
+  manifest: corpus_manifest.csv
+  manifest_sha256: "756cab840ac23189003dcbc119753315fe0b92ca64a78678db701d87d638c6ea"
+  # Resolve paths relative to this config file, not the process working directory.
+  project_root: "../../rag_a3"
+  expected_documents: 200
+  expected_sources:
+    confluence: 194
+    manual: 6
+  expected_statuses:
+    unknown: 174
+    possibly_outdated: 26
+    confirmed: 0
+  source_encoding: utf-8
+  content_hash: sha256_raw_file_bytes
+  sources_are_read_only: true
+
+output:
+  directory: golden_dataset
+  overwrite_existing: false
+
+execution:
+  generation_enabled: false
+  ragas_enabled: false
+  allow_source_modification: false
+  create_vector_index: false
+  install_dependencies: false
+
+generation:
+  target_candidate_questions: 400
+  language: ru
+  random_seed: 42
+  sampling_strategy: entity_and_scenario_coverage
+  require_fixed_questions_per_document: false
+  llm:
+    provider: null
+    model: null
+  embeddings:
+    provider: null
+    model: null
+  knowledge_types:
+    - definition
+    - rule
+    - process
+    - relationship
+    - exception
+    - reference
+
+selection:
+  primary_category_documents:
+    subscriptions_invoice_core: 45
+    partners_suppliers: 25
+    notification_billing: 30
+    atlas_household: 30
+    poseidon_payments: 25
+    etl1_etl3: 25
+    cross_product: 20
+  include_attachments: false
+  include_derived_chunks: false
+  include_output_ranked: false
+  possibly_outdated_policy: hold_for_review
+  unknown_does_not_mean_confirmed: true
+  source_intent_review_required: true
+  context_only_document_ids: [G003, G004, G073, G188]
+  discussions_are_independent_evidence: false
+
+validation:
+  require_source_files_exist: true
+  require_paths_inside_project: true
+  reject_reparse_points: true
+  require_utf8: true
+  verify_content_sha256_before_generation: true
+  require_unique_document_ids: true
+  require_unique_source_paths: true
+  require_unique_source_ids: true
+  require_unique_content_hashes: true
+  require_evidence_for_reference_answers: true
+  require_human_review_of_candidate_questions: true
+  reject_secrets_in_outputs: true
